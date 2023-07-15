@@ -10,6 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Build
+      - run: npm run build
       - uses: actions/checkout@v3
       - name: ftp-action
         # You may pin to the exact commit or the version.
@@ -25,6 +27,6 @@ jobs:
           # Force SSL encryption
           forceSsl: false
           # Local directory
-          localDir: ./dist
+          localDir: dist
           # Remote directory
           remoteDir: .
