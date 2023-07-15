@@ -25,6 +25,6 @@ jobs:
           # Force SSL encryption
           forceSsl: false
           # Local directory
-          localDir: dist
+          localDir: .
           # Remote directory
           remoteDir: .
