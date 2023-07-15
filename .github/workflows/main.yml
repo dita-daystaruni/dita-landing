@@ -1,34 +1,29 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Node.js CI
 
 on:
   push:
     branches: ["master"]
+
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: List items
-        run: ls -la
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Build
         run: npm run build
-      - uses: actions/checkout@v3
-      - name: ftp-action
-        # You may pin to the exact commit or the version.
-        # uses: sebastianpopp/ftp-action@eb75c5cb29d23ee4a729720a27dfb66403cb0f6d
+
+      - name: Deploy to FTP
         uses: sebastianpopp/ftp-action@v2.0.0
         with:
-          # FTP host
-          host: ${{secrets.FTP_SERVER}}
-          # FTP user
-          user: ${{secrets.FTP_USERNAME}}
-          # FTP password
-          password: ${{secrets.FTP_PASSWORD}}
-          # Force SSL encryption
+          host: ${{ secrets.FTP_SERVER }}
+          user: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
           forceSsl: false
-          # Local directory
-          localDir: dist
-          # Remote directory
+          localDir: ./dist
           remoteDir: .
