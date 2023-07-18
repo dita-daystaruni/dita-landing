@@ -1,8 +1,8 @@
 name: Deploy via FTP
 
 on:
-  pull_request:
-    branches: [ "prod" ]
+  push:
+    branches: [ "master" ]
 
 jobs:
   build:
